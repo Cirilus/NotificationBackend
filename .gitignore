@@ -21,8 +21,7 @@ go.work
 .idea/
 
 #config
-configs/.docker.test.env
-configs/config.go.yaml
+configs
 
 
 #swagger

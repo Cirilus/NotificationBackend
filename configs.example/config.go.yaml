@@ -1,0 +1,14 @@
+mode:
+host:
+port:
+loglevel:
+postgresql:
+  username:
+  password:
+  host:
+  port:
+  database:
+keycloak:
+  url:
+  realm:
+  fullCertsPath:

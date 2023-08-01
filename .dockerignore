@@ -8,4 +8,4 @@ main
 # the http files of the Goland
 *.http
 # the config for the docker-compose
-configs/.docker.test.env
+configs.example
