@@ -1,0 +1,11 @@
+# air.toml
+tmp
+docs
+# examoles configs
+*.example
+# the binary of the app
+main
+# the http files of the Goland
+*.http
+# the config for the docker-compose
+configs/.docker.test.env

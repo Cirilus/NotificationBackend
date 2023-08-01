@@ -1,0 +1,29 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+main
+tmp
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Go workspace file
+go.work
+
+#Goland
+*.http
+.idea/
+
+#config
+configs/.docker.test.env
+configs/config.go.yaml
+
+
+#swagger
+docs
