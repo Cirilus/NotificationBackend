@@ -9,7 +9,14 @@ import (
 
 func Endpoints(logger *logrus.Logger, router *gin.Engine, handlers *handlers.Handlers) {
 	logger.Info("Registry the endpoints")
-	AccountRegistry(router, handlers.AccountHandler)
+	apiRoutes := router.Group("/api")
+	{
+		accountRoutes := apiRoutes.Group("/account")
+		{
+			AccountRegistry(accountRoutes, handlers.AccountHandler)
+		}
+	}
+
 	router.GET("/status", handlers.HealthCheckHandler.Check)
 }
 

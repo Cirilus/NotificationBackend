@@ -4,16 +4,19 @@ import (
 	"github.com/sirupsen/logrus"
 	"go.uber.org/fx"
 	"notification/internal/repository/postgres"
+	client "notification/pkg/clients/postgresql"
 )
 
 type Repositories struct {
-	AccountRepository postgres.AccountRepository
+	AccountRepository *postgres.AccountRepository
 }
 
-func GetRepositories(logger *logrus.Logger) *Repositories {
-	repo := new(Repositories)
+func GetRepositories(logger *logrus.Logger, client *client.Postgres) *Repositories {
 	logger.Info("Creating the repository")
-	return repo
+	repo := Repositories{
+		AccountRepository: postgres.NewAccountRepository(client, logger),
+	}
+	return &repo
 }
 
 var Module = fx.Module(

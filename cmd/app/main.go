@@ -7,6 +7,7 @@ import (
 	"notification/internal/delivery/http/registry"
 	"notification/internal/repository"
 	"notification/internal/usecase"
+	"notification/pkg/clients/postgresql"
 	"notification/pkg/logger"
 	"notification/server"
 )
@@ -15,6 +16,7 @@ func main() {
 	fx.New(
 		config.Module,
 		logger.Module,
+		postgresql.Module,
 		repository.Module,
 		usecase.Module,
 		handlers.Module,

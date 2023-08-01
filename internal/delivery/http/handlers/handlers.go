@@ -14,7 +14,7 @@ type Handlers struct {
 func GetHandlers(logger *logrus.Logger, uc *usecase.Usecase) *Handlers {
 	logger.Info("Creating the handlers")
 	handlers := Handlers{
-		AccountHandler:     NewHandler(uc.AccountUsecase),
+		AccountHandler:     NewHandler(uc.AccountUsecase, logger),
 		HealthCheckHandler: NewHealthCheckHandler(),
 	}
 	return &handlers
