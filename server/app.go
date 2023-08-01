@@ -2,20 +2,35 @@ package server
 
 import (
 	"context"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
+
 	"go.uber.org/fx"
 	"notification/internal/config"
 )
 
-func SetUpRouter(logger *logrus.Logger, cfg *config.AppConfig) *gin.Engine {
+func SetUpRouter(cfg *config.AppConfig) *gin.Engine {
 	if cfg.Mode == config.Prod {
 		gin.SetMode(gin.ReleaseMode)
 	}
 	router := gin.Default()
+
+	corsConfig := cors.DefaultConfig()
+	corsConfig.AllowAllOrigins = true
+	router.Use(cors.New(corsConfig))
+
+	router.Use(gin.Recovery())
+
 	return router
 }
 
+// @title Notification Service
+// @version 1.0
+// @description This is the documentation of the backend service of the notificator
+// @host localhost:8000
+// @BasePath /
+// @schemes http
 func RunApp(lc fx.Lifecycle, logger *logrus.Logger, router *gin.Engine, cfg *config.AppConfig) {
 	lc.Append(
 		fx.Hook{
