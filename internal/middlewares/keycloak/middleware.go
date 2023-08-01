@@ -227,11 +227,11 @@ func (t *TokenContainer) Valid() bool {
 	return t.Token.Valid()
 }
 
-func (kw KeycloakMiddlewares) Auth(accessCheckFunction AccessCheckFunction, endpoints Config) gin.HandlerFunc {
-	return kw.authChain(endpoints, accessCheckFunction)
+func (m Middleware) Auth(accessCheckFunction AccessCheckFunction, endpoints Config) gin.HandlerFunc {
+	return m.authChain(endpoints, accessCheckFunction)
 }
 
-func (kw KeycloakMiddlewares) authChain(config Config, accessCheckFunctions ...AccessCheckFunction) gin.HandlerFunc {
+func (m Middleware) authChain(config Config, accessCheckFunctions ...AccessCheckFunction) gin.HandlerFunc {
 	// middleware
 	return func(ctx *gin.Context) {
 		t := time.Now()
