@@ -18,6 +18,11 @@ func Endpoints(logger *logrus.Logger, router *gin.Engine, handlers *handlers.Han
 		{
 			AccountRegistry(accountRoutes, handlers.AccountHandler)
 		}
+
+		notificationRoutes := apiRoutes.Group("/notification")
+		{
+			NotificationRegistry(notificationRoutes, handlers.NotificationHandler)
+		}
 	}
 
 	router.GET("/status", handlers.HealthCheckHandler.Check)

@@ -8,13 +8,15 @@ import (
 )
 
 type Repositories struct {
-	AccountRepository *postgres.AccountRepository
+	AccountRepository      *postgres.AccountRepository
+	NotificationRepository *postgres.NotificationRepository
 }
 
 func GetRepositories(logger *logrus.Logger, client *client.Postgres) *Repositories {
 	logger.Info("Creating the repository")
 	repo := Repositories{
-		AccountRepository: postgres.NewAccountRepository(client, logger),
+		AccountRepository:      postgres.NewAccountRepository(client, logger),
+		NotificationRepository: postgres.NewNotificationRepository(client, logger),
 	}
 	return &repo
 }

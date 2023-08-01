@@ -7,14 +7,17 @@ import (
 )
 
 type Usecase struct {
-	AccountUsecase *AccountUsecase
+	AccountUsecase      *AccountUsecase
+	NotificationUsecase *NotificationUsecase
 }
 
 func GetUsecases(logger *logrus.Logger, repo *repository.Repositories) *Usecase {
 	logger.Infof("Creating the usecase")
 	usecase := Usecase{
-		AccountUsecase: NewAccountUsecase(repo.AccountRepository, logger),
+		AccountUsecase:      NewAccountUsecase(repo.AccountRepository, logger),
+		NotificationUsecase: NewNotificationUsecase(repo.NotificationRepository, logger),
 	}
+
 	return &usecase
 }
 
