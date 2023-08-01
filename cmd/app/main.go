@@ -5,6 +5,7 @@ import (
 	"notification/internal/config"
 	"notification/internal/delivery/http/handlers"
 	"notification/internal/delivery/http/registry"
+	"notification/internal/middlewares"
 	"notification/internal/repository"
 	"notification/internal/usecase"
 	"notification/pkg/clients/postgresql"
@@ -17,6 +18,7 @@ func main() {
 		config.Module,
 		logger.Module,
 		postgresql.Module,
+		middlewares.Module,
 		repository.Module,
 		usecase.Module,
 		handlers.Module,
