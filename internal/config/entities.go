@@ -9,7 +9,8 @@ const (
 )
 
 const (
-	DefaultConfigPath = "configs/config.go.yaml"
+	DefaultAppConfigPath   = "configs/config.go.yaml"
+	DefaultGooseConfigPath = "configs/config.goose.yaml"
 )
 
 type PostgreSQL struct {
@@ -24,9 +25,4 @@ type Keycloak struct {
 	Url           string  `yaml:"url" env-required:"true"`
 	Realm         string  `yaml:"realm" env-required:"true"`
 	FullCertsPath *string `yaml:"fullCertsPath"`
-}
-
-type ConfigStruct struct {
-	PostgreSQL PostgreSQL `yaml:"postgresql"`
-	Keycloak   Keycloak   `yaml:"keycloak"`
 }

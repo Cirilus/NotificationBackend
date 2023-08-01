@@ -8,7 +8,7 @@ import (
 	"notification/internal/config"
 )
 
-func SetUpRouter(logger *logrus.Logger, cfg *config.Config) *gin.Engine {
+func SetUpRouter(logger *logrus.Logger, cfg *config.AppConfig) *gin.Engine {
 	if cfg.Mode == config.Prod {
 		gin.SetMode(gin.ReleaseMode)
 	}
@@ -16,7 +16,7 @@ func SetUpRouter(logger *logrus.Logger, cfg *config.Config) *gin.Engine {
 	return router
 }
 
-func RunApp(lc fx.Lifecycle, logger *logrus.Logger, router *gin.Engine, cfg *config.Config) {
+func RunApp(lc fx.Lifecycle, logger *logrus.Logger, router *gin.Engine, cfg *config.AppConfig) {
 	lc.Append(
 		fx.Hook{
 			OnStart: func(ctx context.Context) error {

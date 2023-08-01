@@ -1,0 +1,11 @@
+FROM golang:alpine
+
+ENV CGO_ENABLED 0
+
+ENV GOOS linux
+
+RUN apk update --no-cache
+
+RUN go install github.com/pressly/goose/v3/cmd/goose@latest
+
+WORKDIR /migrations/

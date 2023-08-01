@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func GetLogger(cfg *config.Config) *logrus.Logger {
+func GetLogger(cfg *config.AppConfig) *logrus.Logger {
 	logger := logrus.New()
 	logger.SetOutput(os.Stdout)
 	level, err := logrus.ParseLevel(cfg.LogLevel)

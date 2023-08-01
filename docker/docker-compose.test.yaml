@@ -4,7 +4,7 @@ services:
   test_web:
     build:
       context: ../
-      dockerfile: Dockerfile
+      dockerfile: ../Dockerfile_app
     container_name: test_web
     ports:
       - "8000:8000"
@@ -16,14 +16,15 @@ services:
         condition: service_healthy
 
   test_migrate:
-    image: arigaio/atlas:latest
-    command: >
-      schema apply 
-      --url ${POSTGRES_URL}
+    build:
+      context: ../
+      dockerfile: Dockerfile_goose
+    container_name: test_migrate
+    env_file:
+      - ../configs/.docker.dev.env
+    command: goose up
     volumes:
-      - ./db/:/migrations/
-    networks:
-      - test
+      - ../migrations:/migrations
     depends_on:
       postgres:
         condition: service_healthy

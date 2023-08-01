@@ -4,7 +4,7 @@ services:
   web:
     build:
       context: ../
-      dockerfile: Dockerfile
+      dockerfile: ../Dockerfile_app
     container_name: web
     ports:
       - "8000:8000"
@@ -16,7 +16,7 @@ services:
   telegram_bot:
     build:
       context: ./TelegramBot/
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile_app
     container_name: telegram_bot
     ports:
       - "3000:3000"
@@ -25,17 +25,19 @@ services:
   notificator:
     build:
       context: ./notificators/
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile_app
     container_name: notificator
     command: sh -c "python main.py"
 
   migrate:
-    image: arigaio/atlas:latest
-    command: >
-      migrate apply 
-      --url ${POSTGRES_URL}
+    build:
+      context: ../
+      dockerfile: Dockerfile_goose
+    command: goose up
     volumes:
-      - ./db/:/migrations/
+      - ../migrations:/migrations
+    env_file:
+      - ../configs/.docker.dev.env
 #    depends_on:
 #      postgres:
 #        condition: service_healthy

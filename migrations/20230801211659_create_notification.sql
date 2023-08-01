@@ -1,5 +1,4 @@
 -- +goose Up
--- +goose StatementBegin
 CREATE TABLE IF NOT EXISTS notification (
     id uuid primary key,
     title text not null,
@@ -12,5 +11,4 @@ CREATE TABLE IF NOT EXISTS notification (
 );
 
 -- +goose Down
--- +goose StatementBegin
 DROP TABLE notification;

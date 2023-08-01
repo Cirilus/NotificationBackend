@@ -8,7 +8,7 @@ import (
 	"sync"
 )
 
-type Config struct {
+type AppConfig struct {
 	Mode       Mode       `yaml:"mode"`
 	Host       string     `yaml:"host"`
 	Port       string     `yaml:"port"`
@@ -17,29 +17,29 @@ type Config struct {
 	LogLevel   string     `yaml:"loglevel"`
 }
 
-var instance *Config
+var appConfig *AppConfig
 var once sync.Once
 
-func GetConfig() *Config {
+func GetAppConfig() *AppConfig {
 	once.Do(func() {
-		pathToConfig := os.Getenv("path_to_config")
+		pathToConfig := os.Getenv("path_to_app_config")
 		logrus.Info("read application config")
-		instance = &Config{}
+		appConfig = &AppConfig{}
 		if pathToConfig == "" {
-			pathToConfig = DefaultConfigPath
+			pathToConfig = DefaultAppConfigPath
 		}
-		if err := cleanenv.ReadConfig(pathToConfig, instance); err != nil {
-			help, _ := cleanenv.GetDescription(instance, nil)
+		if err := cleanenv.ReadConfig(pathToConfig, appConfig); err != nil {
+			help, _ := cleanenv.GetDescription(appConfig, nil)
 			logrus.Info(help)
 			logrus.Fatal(err)
 		}
 	})
-	return instance
+	return appConfig
 }
 
 var Module = fx.Module(
 	"config",
 	fx.Provide(
-		GetConfig,
+		GetAppConfig,
 	),
 )
