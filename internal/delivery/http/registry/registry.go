@@ -8,20 +8,26 @@ import (
 	"go.uber.org/fx"
 	_ "notification/docs"
 	"notification/internal/delivery/http/handlers"
+	"notification/internal/middlewares"
 )
 
-func Endpoints(logger *logrus.Logger, router *gin.Engine, handlers *handlers.Handlers) {
+func Endpoints(
+	logger *logrus.Logger,
+	router *gin.Engine,
+	handlers *handlers.Handlers,
+	md *middlewares.Middlewares,
+) {
 	logger.Info("Registry the endpoints")
 	apiRoutes := router.Group("/api")
 	{
 		accountRoutes := apiRoutes.Group("/account")
 		{
-			AccountRegistry(accountRoutes, handlers.AccountHandler)
+			AccountRegistry(accountRoutes, handlers.AccountHandler, md.KeycloakMiddleware)
 		}
 
 		notificationRoutes := apiRoutes.Group("/notification")
 		{
-			NotificationRegistry(notificationRoutes, handlers.NotificationHandler)
+			NotificationRegistry(notificationRoutes, handlers.NotificationHandler, md)
 		}
 	}
 

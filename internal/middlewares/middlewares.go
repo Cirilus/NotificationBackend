@@ -2,6 +2,7 @@ package middlewares
 
 import (
 	"go.uber.org/fx"
+	"notification/internal/config"
 	"notification/internal/middlewares/keycloak"
 )
 
@@ -9,11 +10,10 @@ type Middlewares struct {
 	KeycloakMiddleware *keycloak.Middleware
 }
 
-func NewMiddlewares() *Middlewares {
-	keycloakMiddleware := keycloak.Middleware{}
+func NewMiddlewares(cfg *config.AppConfig) *Middlewares {
 
 	return &Middlewares{
-		KeycloakMiddleware: &keycloakMiddleware,
+		KeycloakMiddleware: keycloak.NewMiddleware(cfg),
 	}
 }
 

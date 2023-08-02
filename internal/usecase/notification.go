@@ -14,13 +14,13 @@ type NotificationUseCaseInterface interface {
 	AddNotificationToAccount(ctx context.Context, notificationId uuid.UUID, accountsId []uuid.UUID) error
 	DeleteNotificationFromAccount(ctx context.Context, notificationId uuid.UUID, accountId uuid.UUID) error
 
-	DeleteNotification(ctx context.Context, uuid uuid.UUID) error
+	DeleteNotification(ctx context.Context, id uuid.UUID) error
 
-	UpdateNotifications(ctx context.Context, uuid uuid.UUID, notification models.UpdatedNotification) (*models.UpdatedNotification, error)
+	UpdateNotifications(ctx context.Context, id uuid.UUID, notification models.UpdatedNotification) (*models.UpdatedNotification, error)
 
-	NotificationById(ctx context.Context, uuid uuid.UUID) (*models.Notification, error)
+	NotificationById(ctx context.Context, id uuid.UUID) (*models.Notification, error)
 	AllNotifications(ctx context.Context) ([]models.Notification, error)
-	NotificationsByUser(ctx context.Context, uuid uuid.UUID) ([]models.Notification, error)
+	NotificationsByAccount(ctx context.Context, id uuid.UUID) ([]models.Notification, error)
 }
 
 type NotificationUsecase struct {
@@ -33,12 +33,16 @@ func NewNotificationUsecase(repo postgres.NotificationRepositoryInterface, logge
 }
 
 func (n NotificationUsecase) CreateNotification(ctx context.Context, notification models.Notification) error {
-	//TODO implement me
-	panic("implement me")
+	err := n.repo.CreateNotification(ctx, notification)
+	if err != nil {
+		logrus.Error("Notification - UseCase - CreateNotification")
+		return err
+	}
+	return nil
 }
 
 func (n NotificationUsecase) AddNotificationToAccount(ctx context.Context, notificationId uuid.UUID, accountsId []uuid.UUID) error {
-	//TODO implement me
+	//TODO implement me from creating the Add Account to Notification in repo
 	panic("implement me")
 }
 
@@ -47,27 +51,47 @@ func (n NotificationUsecase) DeleteNotificationFromAccount(ctx context.Context, 
 	panic("implement me")
 }
 
-func (n NotificationUsecase) DeleteNotification(ctx context.Context, uuid uuid.UUID) error {
-	//TODO implement me
-	panic("implement me")
+func (n NotificationUsecase) DeleteNotification(ctx context.Context, id uuid.UUID) error {
+	err := n.repo.DeleteNotification(ctx, id)
+	if err != nil {
+		logrus.Error("Notification - UseCase - DeleteNotification")
+		return err
+	}
+	return nil
 }
 
-func (n NotificationUsecase) UpdateNotifications(ctx context.Context, uuid uuid.UUID, notification models.UpdatedNotification) (*models.UpdatedNotification, error) {
-	//TODO implement me
-	panic("implement me")
+func (n NotificationUsecase) UpdateNotifications(ctx context.Context, id uuid.UUID, notification models.UpdatedNotification) (*models.UpdatedNotification, error) {
+	updateNotifications, err := n.repo.UpdateNotifications(ctx, id, notification)
+	if err != nil {
+		logrus.Error("Notification - UseCase - UpdateNotification")
+		return nil, err
+	}
+	return updateNotifications, nil
 }
 
-func (n NotificationUsecase) NotificationById(ctx context.Context, uuid uuid.UUID) (*models.Notification, error) {
-	//TODO implement me
-	panic("implement me")
+func (n NotificationUsecase) NotificationById(ctx context.Context, id uuid.UUID) (*models.Notification, error) {
+	notificationById, err := n.repo.GetNotificationById(ctx, id)
+	if err != nil {
+		logrus.Error("Notification - UseCase - NotificationById")
+		return nil, err
+	}
+	return notificationById, nil
 }
 
 func (n NotificationUsecase) AllNotifications(ctx context.Context) ([]models.Notification, error) {
-	//TODO implement me
-	panic("implement me")
+	allNotifications, err := n.repo.GetAllNotifications(ctx)
+	if err != nil {
+		logrus.Error("Notification - UseCase - AllNotifications")
+		return nil, err
+	}
+	return allNotifications, nil
 }
 
-func (n NotificationUsecase) NotificationsByUser(ctx context.Context, uuid uuid.UUID) ([]models.Notification, error) {
-	//TODO implement me
-	panic("implement me")
+func (n NotificationUsecase) NotificationsByAccount(ctx context.Context, id uuid.UUID) ([]models.Notification, error) {
+	notificationByUser, err := n.repo.GetNotificationsByAccount(ctx, id)
+	if err != nil {
+		logrus.Error("Notification - UseCase - NotificationById")
+		return nil, err
+	}
+	return notificationByUser, nil
 }

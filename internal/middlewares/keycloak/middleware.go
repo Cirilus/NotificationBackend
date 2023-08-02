@@ -228,10 +228,10 @@ func (t *TokenContainer) Valid() bool {
 }
 
 func (m Middleware) Auth(accessCheckFunction AccessCheckFunction, endpoints Config) gin.HandlerFunc {
-	return m.authChain(endpoints, accessCheckFunction)
+	return authChain(endpoints, accessCheckFunction)
 }
 
-func (m Middleware) authChain(config Config, accessCheckFunctions ...AccessCheckFunction) gin.HandlerFunc {
+func authChain(config Config, accessCheckFunctions ...AccessCheckFunction) gin.HandlerFunc {
 	// middleware
 	return func(ctx *gin.Context) {
 		t := time.Now()

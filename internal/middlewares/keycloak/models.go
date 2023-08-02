@@ -1,12 +1,27 @@
 package keycloak
 
-import "gopkg.in/square/go-jose.v2/jwt"
+import (
+	"gopkg.in/square/go-jose.v2/jwt"
+	"notification/internal/config"
+)
 
 type Middleware struct {
+	Config
 }
 
-func NewMiddleware() *Middleware {
-	return &Middleware{}
+func (m Middleware) ChangeConfig(keycloakConfig Config) {
+	m.Config = keycloakConfig
+}
+
+func NewMiddleware(cfg *config.AppConfig) *Middleware {
+	return &Middleware{
+		Config: Config{
+			Url:                cfg.Keycloak.Url,
+			Realm:              cfg.Keycloak.Realm,
+			FullCertsPath:      cfg.Keycloak.FullCertsPath,
+			CustomClaimsMapper: nil,
+		},
+	}
 }
 
 type Token struct {

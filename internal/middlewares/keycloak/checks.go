@@ -64,7 +64,7 @@ func UidCheck(at []AccessTuple) func(tc *TokenContainer, ctx *gin.Context) bool 
 	}
 }
 
-func AuthCheck() func(tc *TokenContainer, ctx *gin.Context) bool {
+func (m Middleware) AuthCheck() func(tc *TokenContainer, ctx *gin.Context) bool {
 	return func(tc *TokenContainer, ctx *gin.Context) bool {
 		addTokenToContext(tc, ctx)
 		return true

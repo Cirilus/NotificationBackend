@@ -6,7 +6,7 @@ import (
 )
 
 type Notification struct {
-	Id        uuid.UUID   `json:"id"`
+	Id        *uuid.UUID  `json:"id"`
 	Title     string      `json:"title" binding:"required"`
 	Body      string      `json:"body" binding:"required"`
 	Telegram  *string     `json:"telegram,omitempty"`
